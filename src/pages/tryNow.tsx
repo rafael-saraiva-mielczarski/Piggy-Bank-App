@@ -56,7 +56,10 @@ export default function tryNow(){
                     <p>We care about your data in our <a href="privacy">privacy policy</a></p>
                 </div>
             </section>
-            <Link href="/"><NavButton title={navTitle} /></Link>
+            <section className={styles.freeTrial}>
+                <p>If you want to try our early acess demo you can click the button bellow!</p>
+                <Link href="/"><NavButton title={navTitle} /></Link>
+            </section>
         </Container>
     </div>
   );
