@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import styles from "../styles/tryNow.module.scss";
+import styles from "./tryNow.module.scss";
 import { TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import NavButton from "@/components/navButton";
@@ -58,7 +58,7 @@ export default function tryNow(){
             </section>
             <section className={styles.freeTrial}>
                 <p>If you want to try our early acess demo you can click the button bellow!</p>
-                <Link href="/"><NavButton title={navTitle} /></Link>
+                <Link href="/auth/auth"><NavButton title={navTitle} /></Link>
             </section>
         </Container>
     </div>

@@ -12,7 +12,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href="/tryNow">Try Now</Link>
+        <Link href="/demo/tryNow">Try Now</Link>
+        <Link href="/auth/auth">Auth</Link>
       </main>
     </>
   )

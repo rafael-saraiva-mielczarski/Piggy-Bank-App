@@ -12,7 +12,7 @@ const arvo = Arvo({
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
 
-    const showHeader = router.pathname === "/tryNow" ? false : true;
+    const showHeader = router.pathname === "/demo/tryNow" || router.pathname === "/auth/auth" ? false : true;
 
     return (
         <main className={arvo.className} >
