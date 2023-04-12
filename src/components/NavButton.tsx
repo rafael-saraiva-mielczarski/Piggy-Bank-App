@@ -10,7 +10,7 @@ const styledButton = {
         border: "4px solid #FF9AD1",
         borderRadius: "10px",
         fontFamily: "inherit",
-        fontSize: "18px"
+        fontSize: "19px"
       }
 }
 
