@@ -2,7 +2,7 @@ import { Container } from "@mui/system";
 import styles from "../styles/tryNow.module.scss";
 import { TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import NavButton from "../components/navButton";
+import NavButton from "@/components/navButton";
 import Link from "next/link";
 
 export default function tryNow(){
