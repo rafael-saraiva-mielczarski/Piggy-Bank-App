@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 import TextField from "@mui/material/TextField";
 import Button, { ButtonProps } from '@mui/material/Button';
+import styles from './signMethods.module.scss';
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -45,20 +46,6 @@ const InputTextField = styled(TextField)({
     },
   }));
 
-  const styledForms = {
-    div: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
-    h2: {
-        paddingBottom: "20px"
-    },
-    span: {
-        padding: "10px 0"
-    }
-  }
-
 export default function SignIn() {
 
     const handleSignIn = () => {
@@ -66,15 +53,15 @@ export default function SignIn() {
     }
 
     return (
-        <div style={styledForms.div}>
-            <h2 style={styledForms.h2}>Register for free!</h2>
-                <span style={styledForms.span}>
+        <div className={styles.forms}>
+            <h2>Register for free!</h2>
+                <span>
                     <InputTextField id="email" label="Email" variant="outlined" type="email"/>
                 </span>
-                <span style={styledForms.span}>
+                <span>
                     <InputTextField id="password" label="Password" variant="outlined" type="password"/>
                 </span>
-                <span style={{paddingTop:"10px", margin: 0}}>
+                <span style={{padding: 0}}>
                     <RegisterButton>Register</RegisterButton>
                 </span>
         </div>
