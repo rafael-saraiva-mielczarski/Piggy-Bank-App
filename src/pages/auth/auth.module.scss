@@ -1,0 +1,66 @@
+.auth {
+    background-color: #FFD0F5;
+
+    .header {
+        display: flex;
+        
+        .intro {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            width: 60%; 
+            padding: 40px 0 20px 0;
+    
+            h1 {
+                font-size: 34px;
+            }
+    
+            p {
+                font-size: 20px;
+                padding: 20px 0;
+            }
+    
+        }
+
+        .switch {
+            display: flex;
+            margin-left: auto;
+        }
+    }
+
+    .body {
+        display: flex;
+        justify-content: space-evenly;
+        padding-bottom: 40px;
+
+        .signInBox {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            background-color: #FF9AD1;
+            border-radius: 10px;
+            box-shadow: 6px 6px 10px rgb(155, 155, 155);
+            height: fit-content;
+
+            .signBtns {
+                display: flex;
+                justify-content: center;
+            }
+
+            .signForms {
+                padding-top: 20px;
+            }
+        }
+
+        .pigImg {
+            width: 380px;
+            height: 100%;
+            margin-top: -40px;
+            transition: transform 4s ease-in-out;
+        }
+
+        .pigImg:hover {
+            transform: rotate(360deg);
+        }
+    }
+}
