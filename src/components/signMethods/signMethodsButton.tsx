@@ -5,7 +5,7 @@ import { CSSProperties } from 'react';
 const SignButton = styled(Button)<ButtonProps>(() => ({
     color: "white",
     padding: "10px 20px",
-    border: "2px solid black",
+    border: "2px solid #5c003a",
     borderRadius: "10px",
     fontFamily: 'inherit',
     '&:hover': {

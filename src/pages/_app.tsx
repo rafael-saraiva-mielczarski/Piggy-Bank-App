@@ -15,9 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
     const showHeader = router.pathname === "/demo/tryNow" || router.pathname === "/auth/auth" ? false : true;
 
     return (
-        <main className={arvo.className} >
+        <main className={arvo.className} style={{height: "100vh"}} >
             {showHeader && <Header />}
-            <Component {...pageProps} />
+            <Component {...pageProps}/>
         </main>
     )
 }

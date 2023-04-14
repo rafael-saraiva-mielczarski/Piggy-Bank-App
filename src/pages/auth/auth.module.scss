@@ -1,5 +1,9 @@
 .auth {
     background-color: #FFD0F5;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
 
     .header {
         display: flex;
@@ -9,7 +13,8 @@
             flex-direction: column;
             text-align: center;
             width: 60%; 
-            padding: 40px 0 20px 0;
+            padding: 20px 0;
+            color: #5c003a;
     
             h1 {
                 font-size: 34px;
@@ -25,13 +30,13 @@
         .switch {
             display: flex;
             margin-left: auto;
+            color: #5c003a;
         }
     }
 
     .body {
         display: flex;
         justify-content: space-evenly;
-        padding-bottom: 40px;
 
         .signInBox {
             display: flex;

@@ -12,21 +12,21 @@ const InputTextField = styled(TextField)({
         width: "300px",
     },
     '& label.Mui-focused': {
-      color: 'black',
+      color: '#5c003a',
       fontFamily: 'inherit',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: 'black',   
+      borderBottomColor: '#5c003a',   
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: 'black',
+        borderColor: '#5c003a',
       },
       '&:hover fieldset': {
-        borderColor: 'black',
+        borderColor: '#5c003a',
       },
       '&.Mui-focused fieldset': {
-        borderColor: 'black',
+        borderColor: '#5c003a',
       },
     },
   });
@@ -34,15 +34,15 @@ const InputTextField = styled(TextField)({
   const RegisterButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: "white",
     padding: "10px 20px",
-    backgroundColor: "#1DD100",
-    border: "2px solid black",
+    backgroundColor: "#c90096",
+    border: "2px solid #5c003a",
     borderRadius: "10px",
     fontFamily: 'inherit',
     '&:hover': {
-      backgroundColor: "green",
+      backgroundColor: "#aa007f",
     },
     '&:active': {
-      backgroundColor: '#0F6A00',
+      backgroundColor: '#aa007f',
     },
   }));
 

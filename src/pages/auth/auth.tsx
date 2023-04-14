@@ -29,8 +29,8 @@ export default function Auth() {
                 <section className={styles.body}>
                     <div className={styles.signInBox}>
                         <div className={styles.signBtns}>
-                            <SignMethodsButton title={signIn} style={active === 1 ? {background: "#EC32B8"} : {background: "gray"}} onClick={() => {(setSignMethod(1)); (setActive(1))}}/>
-                            <SignMethodsButton title={signUp} style={active === 2 ? {background: "#EC32B8"} : {background: "gray"}} onClick={() => {(setSignMethod(2)); setActive((2))}}/>
+                            <SignMethodsButton title={signIn} style={active === 1 ? {background: "#EC32B8"} : {background: "gray", border: "2px solid #666666"}} onClick={() => {(setSignMethod(1)); (setActive(1))}}/>
+                            <SignMethodsButton title={signUp} style={active === 2 ? {background: "#EC32B8"} : {background: "gray", border: "2px solid #666666"}} onClick={() => {(setSignMethod(2)); setActive((2))}}/>
                         </div>
                         <div className={styles.signForms}>
                         {signMethod === 1 ? <SignIn /> : <SignUp />}
