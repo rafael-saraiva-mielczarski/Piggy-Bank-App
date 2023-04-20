@@ -3,7 +3,7 @@ import { Container } from "@mui/system";
 import Image from "next/image";
 import styles from "./auth.module.scss"
 import pig from "@/assets/pig.png"
-import SignMethodsButton from "@/components/signMethods/signMethodsButton";
+import SignMethodsButton from "@/components/signMethods/signMethodsButton/signMethodsButton";
 import { useState } from "react";
 import SignIn from "@/components/signMethods/signIn";
 import SignUp from "@/components/signMethods/signUp";

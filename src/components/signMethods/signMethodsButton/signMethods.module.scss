@@ -1,12 +1,14 @@
+.title {
+    padding-bottom: 30px;
+    color: #6c0145;
+    text-align: center;
+}
+
 .forms {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: #6c0145;
-
-    h2 {
-        padding-bottom: 30px;
-    }
 
     span {
         padding-bottom: 20px;

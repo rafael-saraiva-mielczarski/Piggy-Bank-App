@@ -1,7 +1,11 @@
 import { styled } from '@mui/material/styles';
 import TextField from "@mui/material/TextField";
 import Button, { ButtonProps } from '@mui/material/Button';
-import styles from './signMethods.module.scss';
+import styles from './signMethodsButton/signMethods.module.scss';
+import { auth } from '../../libs/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useState, FormEvent } from 'react';
+import { useRouter } from 'next/router';
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -49,22 +53,45 @@ const InputTextField = styled(TextField)({
 
 export default function SignUp() {
 
-    const handleSignUp = () => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const router = useRouter()
 
+    const handleSignUp = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => console.log(userCredential))
+        .catch((err) => console.log(err))
+        router.push('/')
+        
     }
 
     return (
-        <div className={styles.forms}>
-            <h2>Welcome back!</h2>
-                <span>
-                    <InputTextField id="email" label="Email" variant="outlined" type="email"/>
-                </span>
-                <span>
-                    <InputTextField id="password" label="Password" variant="outlined" type="password"/>
-                </span>
-                <span style={{padding: 0}}>
-                    <RegisterButton>Enter</RegisterButton>
-                </span>
+        <div>
+            <h2 className={styles.title}>Register for free!</h2>
+                <form className={styles.forms} onSubmit={handleSignUp}>
+                    <span>
+                        <InputTextField 
+                        id="email" 
+                        label="Email" 
+                        variant="outlined" 
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}/>
+                    </span>
+                    <span>
+                        <InputTextField 
+                        id="password" 
+                        label="Password" 
+                        variant="outlined" 
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}/>
+                    </span>
+                    <span style={{padding: 0}}>
+                        <RegisterButton type="submit">Register</RegisterButton>
+                    </span>
+                </form>
         </div>
     )
 }
