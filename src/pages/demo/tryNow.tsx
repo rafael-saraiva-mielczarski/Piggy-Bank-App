@@ -58,7 +58,7 @@ export default function tryNow(){
             </section>
             <section className={styles.freeTrial}>
                 <p>If you want to try our early acess demo you can click the button bellow!</p>
-                <Link href="/auth/auth"><NavButton title={navTitle} /></Link>
+                <Link href="/"><NavButton title={navTitle} /></Link>
             </section>
         </Container>
     </div>
