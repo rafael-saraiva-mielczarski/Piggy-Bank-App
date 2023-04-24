@@ -65,7 +65,7 @@ export default function SignIn() {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log(userCredential)
-            router.push('/')})
+            router.push('/home/home')})
         .catch((error) => {
             console.log(error)
             switch(error.code) {

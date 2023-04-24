@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Link from 'next/link'
+import Auth from './auth/auth'
 
 export default function Home() {
 
@@ -11,9 +11,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Link href="/demo/tryNow">Try Now</Link>
-        <Link href="/auth/auth">Auth</Link>
+      <main style={{background: "#FFD0F5", height: "100%"}}>
+        <Auth />
       </main>
     </>
   )

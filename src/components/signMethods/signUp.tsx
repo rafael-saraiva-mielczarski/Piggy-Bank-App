@@ -66,7 +66,7 @@ export default function SignUp() {
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log(userCredential)
-            router.push('/')
+            router.push('/home/home')
         })
         .catch((error) => {
             console.log(error)

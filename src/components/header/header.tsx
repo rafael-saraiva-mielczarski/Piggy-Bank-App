@@ -15,7 +15,8 @@ export default function Header () {
     const handleSignOut = () => {
         signOut(auth).then(() => {
             console.log("logout successful")
-            router.push("/auth/auth")
+            console.log(auth)
+            router.push("/")
         }).catch((err) => {
             console.log(err)
         })

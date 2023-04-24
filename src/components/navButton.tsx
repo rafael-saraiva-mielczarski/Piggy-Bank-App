@@ -1,3 +1,5 @@
+import EastIcon from '@mui/icons-material/East';
+
 type ButtonProps = {
     title: string
 }
