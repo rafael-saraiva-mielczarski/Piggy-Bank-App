@@ -10,6 +10,13 @@
     align-items: center;
     color: #6c0145;
 
+    .alert {
+        background: #ff5c5c;
+        border: 2px solid red; 
+        font-family: inherit; 
+        margin-bottom: 15px;
+    }
+
     span {
         padding-bottom: 20px;
     }

@@ -6,6 +6,7 @@ import { auth } from '../../libs/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/router';
+import { Alert, Fade } from '@mui/material';
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -55,15 +56,31 @@ export default function SignUp() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    
     const router = useRouter()
 
     const handleSignUp = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => console.log(userCredential))
-        .catch((err) => console.log(err))
-        router.push('/')
-        
+        .then((userCredential) => {
+            console.log(userCredential)
+            router.push('/')
+        })
+        .catch((error) => {
+            console.log(error)
+            switch(error.code) {
+                case 'auth/email-already-in-use':
+                    setError(true)
+                    setErrorMessage("Email already in use!")
+                    break;
+                case  'auth/invalid-email':
+                    setError(true)
+                    setErrorMessage("Invalid email type!")
+                    break;
+            }
+        })
     }
 
     return (
@@ -88,6 +105,7 @@ export default function SignUp() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}/>
                     </span>
+                    {error && <Fade in={error}><Alert severity='error' variant="filled" className={styles.alert}>{errorMessage}</Alert></Fade>}
                     <span style={{padding: 0}}>
                         <RegisterButton type="submit">Register</RegisterButton>
                     </span>

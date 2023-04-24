@@ -4,9 +4,23 @@ import pig from "../../assets/pig.png"
 import styles from "./header.module.scss"
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModeSwitcher from "../modeSwitcher";
+import { signOut } from "firebase/auth";
+import { auth } from "@/libs/firebase";
+import { useRouter } from "next/router";
 
 export default function Header () {
     
+    const router = useRouter()
+
+    const handleSignOut = () => {
+        signOut(auth).then(() => {
+            console.log("logout successful")
+            router.push("/auth/auth")
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     return (
         <div style={{background: "#FFD0F5"}}>
         <Container>
@@ -20,7 +34,7 @@ export default function Header () {
                 </nav>
                 <div className={styles.utils}>
                     <ModeSwitcher />
-                    <LogoutIcon />
+                    <span onClick={handleSignOut} style={{cursor: "pointer"}}><LogoutIcon/></span>
                 </div>
             </div>
         </Container>

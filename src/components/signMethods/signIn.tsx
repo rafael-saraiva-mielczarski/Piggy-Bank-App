@@ -5,6 +5,8 @@ import styles from './signMethodsButton/signMethods.module.scss';
 import { FormEvent, useState } from 'react';
 import { auth } from '../../libs/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { Alert, Fade } from '@mui/material';
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -53,12 +55,34 @@ export default function SignIn() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    
+    const router = useRouter()
 
     const handleSignIn = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => console.log(userCredential))
-        .catch((err) => console.log(err))
+        .then((userCredential) => {
+            console.log(userCredential)
+            router.push('/')})
+        .catch((error) => {
+            console.log(error)
+            switch(error.code) {
+                case 'auth/wrong-password':
+                    setError(true)
+                    setErrorMessage("The password is wrong!")
+                    break;
+                case  'auth/user-not-found':
+                    setError(true)
+                    setErrorMessage("User not found!")
+                    break;
+                case  'auth/user-disabled':
+                    setError(true)
+                    setErrorMessage("User has been disabled!")
+                    break;
+            }
+        })
     }
 
     return (
@@ -83,6 +107,7 @@ export default function SignIn() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}/>
                     </span>
+                    {error && <Fade in={error}><Alert severity='error' variant="filled" className={styles.alert}>{errorMessage}</Alert></Fade>}
                     <span style={{padding: 0}}>
                         <RegisterButton type="submit">Enter</RegisterButton>
                     </span>
