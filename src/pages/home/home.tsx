@@ -1,4 +1,3 @@
-import NavButton from "@/components/navButton";
 import Link from "next/link";
 import { Container } from "@mui/material";
 import { styled } from '@mui/material/styles';
@@ -6,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import AddIcon from '@mui/icons-material/Add';
 import styles from './home.module.scss';
 import EastIcon from '@mui/icons-material/East';
+import { FormEvent, useState } from "react";
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -37,31 +37,61 @@ const InputTextField = styled(TextField)({
 
 export default function Home() {
 
+    const [totalIncome, setTotalIncome] = useState<number>(0)
+    const [invested, setInvested] = useState<number>(0)
+    const [remaining, setRemaining] = useState<number>(0)
+    const [expenses, setExpenses] = useState<number>(0)
+
+    function handleIncomeChange(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+    }
+
     return (
-        <div className={styles.home}>
-            <Container>
+        <Container>
+            <div className={styles.home}>    
                 <section className={styles.homeLeft}>
                     <section className={styles.introBox}>
                         <h2>Welcome</h2>
                         <p>This is the home page, find a brief overview of your spendings and links to other pages.</p>
                     </section>
-                    <form action="" className={styles.formBox}>
+                    <form onSubmit={handleIncomeChange} className={styles.formBox}>
                         <p>First add your total income:</p>
                         <InputTextField 
                                 id="email" 
                                 label="Earnings" 
                                 variant="outlined" 
-                                type="text" />
-                        <span id="submit"><AddIcon fontSize="large"/></span>
+                                type="text"
+                                onChange={(e) => setTotalIncome(parseInt(e.target.value))} />
+                        <button type="submit"><AddIcon fontSize="large"/></button>
                     </form>
-                    <Link href="/">
-                        <button className={styles.navBtn}>Add or Check Expenses <EastIcon fontSize="large"/></button>
+                    <Link href="/home" style={{textDecoration: "none"}}>
+                        <p className={styles.navBtn}>Add or Check Expenses <EastIcon fontSize="large" sx={{marginLeft: "10px"}}/></p>
                     </Link>
-                    <Link href="/">
-                        <button className={styles.navBtn}>Crypto Investments<EastIcon fontSize="large"/> </button>
+                    <Link href="/home" style={{textDecoration: "none"}}>
+                        <p className={styles.navBtn}>Crypto Investments<EastIcon fontSize="large" sx={{marginLeft: "10px"}}/></p>
                     </Link>
                 </section>
-            </Container>
-        </div>
+                <section className={styles.homeRight}>
+                    <section className={styles.userValues}>
+                        <div className={styles.gridItem}>
+                            <p>Total Income</p>
+                            <h2>{totalIncome}$</h2>
+                        </div>
+                        <div className={styles.gridItem}>
+                            <p>Invested</p>
+                            <h2>{invested}$</h2>
+                        </div>
+                        <div className={styles.gridItem}>
+                            <p>Expenses</p>
+                            <h2>{expenses}$</h2>
+                        </div>
+                        <div className={styles.gridItem}>
+                            <p>Remaining</p>
+                            <h2>{remaining}$</h2>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </Container>
     )
 }

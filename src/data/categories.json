@@ -1,0 +1,10 @@
+[
+    {"id": "1", "title": "Food", "color": "#F797FF"},
+    {"id": "2", "title": "Enjoyment", "color": "#FFD0F5"},
+    {"id": "3", "title": "Education", "color": "#FF97E8"},
+    {"id": "4", "title": "Bills", "color": "#F57CFF"},
+    {"id": "5", "title": "Health", "color": "#8EBBFF"},
+    {"id": "6", "title": "Others", "color": "#64A2FF"},
+    {"id": "7", "title": "Transportation", "color": "#B98EFF"},
+    {"id": "8", "title": "Investments", "color": "#9757FF"}
+]

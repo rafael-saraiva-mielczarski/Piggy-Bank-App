@@ -1,0 +1,26 @@
+.expenses {
+
+    .forms {
+
+    }
+
+    .categoriesAccordion {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        height: fit-content;
+
+        .accordion {
+            margin: 10px;
+            border-radius: 10px;
+            border: 2px solid black;
+
+            .font {
+                font-family: inherit;
+                font-weight: bold;
+            }
+        }
+    }
+}

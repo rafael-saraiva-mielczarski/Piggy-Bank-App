@@ -5,7 +5,8 @@
     .homeLeft {
         display: flex;
         flex-direction: column;
-        padding: 40px 0;
+        align-items: center;
+        padding: 30px 0;
         width: 45%;
 
         .introBox {
@@ -35,12 +36,14 @@
             justify-content: space-evenly;
             align-items: center;
             margin-bottom: 20px ;
+            width: 100%;
 
-            span {
+            button {
                 color: white;
                 background-color: #a4008e;
                 padding: 8px;
                 border-radius: 100%;
+                border: none;
                 display: flex;
             }
         }    
@@ -48,18 +51,60 @@
         .navBtn {
             color: #6c0145;
             background: #FFD0F5;
+            text-decoration: none;
             padding: 15px;
             font-family: inherit;
             font-size: 20px;
-            text-decoration: none;
             border: 4px solid #FF9AD1;
-            text-align: center;
             border-radius: 10px;
-            width: 100%;
+            width: fit-content;
             display: flex;
             align-items: center;
-            justify-content: center;
             margin-bottom: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .homeRight {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 0;
+        width: 55%;
+
+        .userValues {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            height: fit-content;
+        }
+
+        .gridItem {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 40px;
+            background: #FFD0F5;
+            width: 220px;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        .gridItem:nth-child(2) {
+            background: #960075;
+            color: white;
+        }
+
+        .gridItem:nth-child(3) {
+            background: #EC32B8;
+            color: white;
+        }
+
+        .gridItem:nth-child(4) {
+            background: #FF9AD1;
+            color: white;
         }
     }
 }
