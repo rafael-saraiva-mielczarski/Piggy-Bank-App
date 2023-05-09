@@ -8,7 +8,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { Alert, Fade } from '@mui/material';
 
-const InputTextField = styled(TextField)({
+export const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
         fontFamily: "inherit",
         width: "100px",

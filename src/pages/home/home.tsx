@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import styles from './home.module.scss';
 import EastIcon from '@mui/icons-material/East';
 import { FormEvent, useState } from "react";
+import NavButton from "@/components/navButton";
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -64,11 +65,11 @@ export default function Home() {
                                 onChange={(e) => setTotalIncome(parseInt(e.target.value))} />
                         <button type="submit"><AddIcon fontSize="large"/></button>
                     </form>
-                    <Link href="/home" style={{textDecoration: "none"}}>
-                        <p className={styles.navBtn}>Add or Check Expenses <EastIcon fontSize="large" sx={{marginLeft: "10px"}}/></p>
+                    <Link href="/expenses/expenses" style={{textDecoration: "none"}}>
+                        <NavButton title="Add or Check Expenses" />
                     </Link>
                     <Link href="/home" style={{textDecoration: "none"}}>
-                        <p className={styles.navBtn}>Crypto Investments<EastIcon fontSize="large" sx={{marginLeft: "10px"}}/></p>
+                        <NavButton title="Crypto Investments" />
                     </Link>
                 </section>
                 <section className={styles.homeRight}>

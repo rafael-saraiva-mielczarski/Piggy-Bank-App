@@ -1,26 +1,33 @@
 .expenses {
 
     .forms {
+        display: flex;
 
+        .formsBox {
+            display: flex;
+        }
     }
 
-    .categoriesAccordion {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
-        height: fit-content;
+    .categoriesTable {
+        margin: 0 auto;
+        width: 80%;
 
-        .accordion {
-            margin: 10px;
-            border-radius: 10px;
-            border: 2px solid black;
+        .head {
+            background-color: #ffbfee;
 
-            .font {
+            .categorieHeader {
                 font-family: inherit;
                 font-weight: bold;
+                font-size: 20px;
             }
+        }
+
+        .categorieData {
+            font-family: inherit;
+        }
+
+        .categorieData:nth-child(3) {
+            font-weight: 600;
         }
     }
 }

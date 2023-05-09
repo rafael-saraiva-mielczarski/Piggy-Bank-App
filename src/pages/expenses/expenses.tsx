@@ -1,36 +1,75 @@
-import { Accordion, AccordionDetails, AccordionSummary, Container, Typography } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpensesTable from '@/components/expensesTable'
+import NavButton from '@/components/navButton'
+import { Container, InputLabel, MenuItem, Select, FormControl } from '@mui/material'
 import styles from './expenses.module.scss'
-import categories from '../../data/categories.json'
+import { InputTextField } from '@/components/signMethods/signIn'
+import { useState } from 'react'
+import expenses from '../../data/expenses.json'
+
+type Expense = {
+    id: string;
+    title: string;
+    price: number;
+    category: string;
+}
 
 export default function Expenses() {
+
+    const [title, setTitle] = useState<string>("")
+    const [price, setPrice] = useState<number>(0)
+    const [category, setCategory] = useState<string>("")
+
+    function handleSubmit() {
+
+    }
 
     return (
         <Container>
             <section className={styles.expenses}>
                 <div className={styles.forms}>
+                    <NavButton title='Back to home' />
+                    <section>
                     <h1>Add Expense / Investment</h1>
-                </div>
-                <div className={styles.categoriesAccordion}>
-                    {categories.map((category) => (
-                        <Accordion 
-                        className={styles.accordion} 
-                        sx={{background: category.color}}>
-                            <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
+                    <form onSubmit={handleSubmit} className={styles.formsBox}>
+                        <span>
+                        <InputTextField 
+                        id="title" 
+                        label="Title" 
+                        variant="outlined" 
+                        type="string" 
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}/>
+                        </span>
+                        <span>
+                        <InputTextField 
+                        id="title" 
+                        label="Price" 
+                        variant="outlined" 
+                        type="string" 
+                        value={price}
+                        onChange={(e) => setPrice(parseInt(e.target.value))}/>
+                        </span>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="category"
+                                value={category}
+                                label="Category"
+                                onChange={(e) => setCategory(e.target.value)}
                             >
-                            <Typography className={styles.font}>{category.title}</Typography>
-                            <p>00$</p>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                            <Typography className={styles.font}>
-                                {category.title}
-                            </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
+                                <MenuItem disabled value=""><em>Category</em></MenuItem>
+                                {expenses.map((expense) => (
+                                    <span key={expense.id}><MenuItem value={expense.category}>{expense.title}</MenuItem></span>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </form>
+                    </section>
+                    <NavButton title='Expenses charts' />
+                </div>
+                <div className={styles.categoriesTable}>
+                    <ExpensesTable />
                 </div>
             </section>
         </Container>

@@ -1,0 +1,10 @@
+[
+    {"id": "1", "category": "food", "title": "Food", "price": "100"},
+    {"id": "2", "category": "enjoyment", "title": "Enjoyment", "price": "100"},
+    {"id": "3", "category": "education", "title": "Education", "price": "100"},
+    {"id": "4", "category": "bills", "title": "Bills", "price": "100"},
+    {"id": "5", "category": "health", "title": "Health", "price": "100"},
+    {"id": "6", "category": "others", "title": "Others", "price": "100"},
+    {"id": "7", "category": "transportation", "title": "Transportation", "price": "100"},
+    {"id": "8", "category": "investments", "title": "Investments", "price": "100"}
+]
