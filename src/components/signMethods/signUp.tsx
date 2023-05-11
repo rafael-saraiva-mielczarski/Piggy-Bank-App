@@ -2,11 +2,12 @@ import { styled } from '@mui/material/styles';
 import TextField from "@mui/material/TextField";
 import Button, { ButtonProps } from '@mui/material/Button';
 import styles from './signMethodsButton/signMethods.module.scss';
-import { auth } from '../../libs/firebase';
+import { auth, database } from '../../libs/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import { Alert, Fade } from '@mui/material';
+import { push, ref, set} from 'firebase/database'
 
 const InputTextField = styled(TextField)({
     '& .MuiFormLabel-root': {
@@ -58,6 +59,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
+    const userRef = ref(database, "users")
     
     const router = useRouter()
 
@@ -66,6 +68,12 @@ export default function SignUp() {
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log(userCredential)
+            const newUserRef = push(userRef)
+            set(newUserRef, {
+                userId: userCredential.user.uid,
+                name: userCredential.user.displayName,
+                email: userCredential.user.email,
+            })
             router.push('/home/home')
         })
         .catch((error) => {

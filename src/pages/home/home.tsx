@@ -1,40 +1,12 @@
 import Link from "next/link";
 import { Container } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import TextField from "@mui/material/TextField";
 import AddIcon from '@mui/icons-material/Add';
 import styles from './home.module.scss';
-import EastIcon from '@mui/icons-material/East';
+import { InputTextField } from "@/components/signMethods/signIn";
 import { FormEvent, useState } from "react";
+import { database, auth } from '../../libs/firebase.js'
 import NavButton from "@/components/navButton";
-
-const InputTextField = styled(TextField)({
-    '& .MuiFormLabel-root': {
-        fontFamily: "inherit",
-        width: "100px"
-    },
-    '& .MuiInputBase-input': {
-        width: "100px",
-    },
-    '& label.Mui-focused': {
-      color: '#5c003a',
-      fontFamily: 'inherit',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#5c003a',   
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#5c003a',
-      },
-      '&:hover fieldset': {
-        borderColor: '#5c003a',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#5c003a',
-      },
-    },
-  });
+import { ref, set } from "firebase/database";
 
 export default function Home() {
 
@@ -42,6 +14,8 @@ export default function Home() {
     const [invested, setInvested] = useState<number>(0)
     const [remaining, setRemaining] = useState<number>(0)
     const [expenses, setExpenses] = useState<number>(0)
+    const userId = auth.currentUser?.uid
+    
 
     function handleIncomeChange(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()

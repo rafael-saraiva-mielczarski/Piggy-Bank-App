@@ -1,19 +1,25 @@
-import ExpensesTable from '@/components/expensesTable'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete';
 import NavButton from '@/components/navButton'
 import { Container, InputLabel, MenuItem, Select, FormControl } from '@mui/material'
 import styles from './expenses.module.scss'
 import { InputTextField } from '@/components/signMethods/signIn'
-import { FormEvent, MouseEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import expenses from '../../data/expenses.json'
 import { database, auth } from '../../libs/firebase.js'
-import { push, ref, set } from 'firebase/database'
+import { push, ref, set, onValue, remove } from 'firebase/database'
+import { ExpenseData } from '@/interfaces/expenseData'
+import { categories } from '@/data/categories';
 
 export default function Expenses() {
 
     const [title, setTitle] = useState<string>("")
     const [price, setPrice] = useState<number>(0)
     const [category, setCategory] = useState<string>("")
-    const expensesRef = ref(database, "expenses")
+    const expensesRef = ref(database, "users/expenses")
+    const [expenseData, setExpenseData] = useState<ExpenseData[] | []>([])
+    const [loading, setLoading] = useState<boolean>(false)
+    const [haveData, setHaveData] = useState<boolean>(true)
     const userId = auth.currentUser?.uid
 
     function handleCreateExpense(e: FormEvent<HTMLFormElement>) {
@@ -28,8 +34,39 @@ export default function Expenses() {
         })
     }
 
-    function handleDeleteExpense(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault()
+    useEffect(() => {
+        setLoading(true)
+        //get expenses on page load and update as new expense is added
+        try {
+            setLoading(true)
+            onValue(expensesRef, (snapshot) => {
+                if(snapshot.exists()) {
+                    const responseData = Object.entries<ExpenseData>(snapshot.val() ?? []).map(([key, value]) => {
+                        return {
+                            id: key,
+                            userId: value.userId,
+                            title: value.title,
+                            price: value.price,
+                            category: value.category
+                        }
+                    })
+                    setExpenseData(responseData)
+                    setLoading(false)
+                    setHaveData(true)
+                    console.log(expenseData)
+                } else {
+                    setLoading(false)
+                    setHaveData(false)
+                }
+            })
+        } catch(err) {
+            console.log(err);
+        }
+    }, [])
+
+    function handleDeleteExpense(id: string) {
+        const expensesRef = ref(database, `users/expenses/${id}`)
+        remove(expensesRef)
     }
 
     return (
@@ -37,7 +74,7 @@ export default function Expenses() {
             <section className={styles.expenses}>
                 <div className={styles.forms}>
                     <NavButton title='Back to home' />
-                    <section>
+                    <section className={styles.formBox}>
                     <h1>Add Expense / Investment</h1>
                     <form onSubmit={handleCreateExpense} className={styles.formsBox}>
                         <span>
@@ -82,7 +119,32 @@ export default function Expenses() {
                     <NavButton title='Expenses charts' />
                 </div>
                 <div className={styles.categoriesTable}>
-                    <ExpensesTable />
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead className={styles.head}>
+                        <TableRow>
+                            <TableCell className={styles.categorieHeader} align="left">Title</TableCell>
+                            <TableCell className={styles.categorieHeader} align="center">Price</TableCell>
+                            <TableCell className={styles.categorieHeader} align="center">Categorie</TableCell>
+                            <TableCell className={styles.categorieHeader} align="center"></TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody >
+                            {expenseData.map((expense) => (
+                                <TableRow key={expense.id}>
+                                <TableCell className={styles.categorieData}>{expense.title.toUpperCase()}</TableCell>
+                                <TableCell align="center" className={styles.categorieData}>{expense.price} $</TableCell>
+                                <TableCell align="center" className={styles.categorieData}><span style={{background: categories[expense.category].color, padding: "15px", borderRadius: "15px", fontFamily: "inherit"}} >
+                                    {categories[expense.category].title}
+                                    </span></TableCell>
+                                <TableCell align="center" className={styles.categorieData}><DeleteIcon color="error" onClick={() => handleDeleteExpense(expense.id)} /></TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {loading && <h1>loading</h1>}
+                {!haveData && <h1>No data available, add new Expense</h1>}
                 </div>
             </section>
         </Container>
