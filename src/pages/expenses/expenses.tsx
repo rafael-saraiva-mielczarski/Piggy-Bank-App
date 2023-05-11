@@ -3,35 +3,21 @@ import NavButton from '@/components/navButton'
 import { Container, InputLabel, MenuItem, Select, FormControl } from '@mui/material'
 import styles from './expenses.module.scss'
 import { InputTextField } from '@/components/signMethods/signIn'
-import { FormEvent, useState } from 'react'
+import { FormEvent, MouseEvent, useState } from 'react'
 import expenses from '../../data/expenses.json'
 import { database, auth } from '../../libs/firebase.js'
 import { push, ref, set } from 'firebase/database'
-
-type Expense = {
-    id: string;
-    title: string;
-    price: number;
-    category: string;
-}
 
 export default function Expenses() {
 
     const [title, setTitle] = useState<string>("")
     const [price, setPrice] = useState<number>(0)
     const [category, setCategory] = useState<string>("")
+    const expensesRef = ref(database, "expenses")
+    const userId = auth.currentUser?.uid
 
     function handleCreateExpense(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        const userId = auth.currentUser?.uid
-        const expensesRef = ref(database, "expenses")
-
-        const expenseData = {
-            userId: userId,
-            title: title,
-            price: price,
-            category: category,
-        }
 
         const newExpensesRef = push(expensesRef)
         set(newExpensesRef, {
@@ -40,7 +26,10 @@ export default function Expenses() {
             price: price,
             category: category,
         })
-        console.log(expenseData)
+    }
+
+    function handleDeleteExpense(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault()
     }
 
     return (
