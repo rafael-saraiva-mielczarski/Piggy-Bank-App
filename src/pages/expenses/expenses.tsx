@@ -6,7 +6,7 @@ import { InputTextField } from '@/components/signMethods/signIn'
 import { FormEvent, useState } from 'react'
 import expenses from '../../data/expenses.json'
 import { database, auth } from '../../libs/firebase.js'
-import { onValue, push, ref, set } from 'firebase/database'
+import { push, ref, set } from 'firebase/database'
 
 type Expense = {
     id: string;
