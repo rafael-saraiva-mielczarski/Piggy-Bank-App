@@ -1,25 +1,42 @@
 import Link from "next/link";
 import { Container } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
 import styles from './home.module.scss';
 import { InputTextField } from "@/components/signMethods/signIn";
 import { FormEvent, useEffect, useState, MouseEvent } from "react";
 import { database, auth } from '../../libs/firebase.js'
 import NavButton from "@/components/navButton";
-import { get, ref, set } from "firebase/database";
-import { Income } from "@/interfaces/income";
+import { ref, set, onValue, get } from 'firebase/database'
+import { ExpenseData } from "@/interfaces/expenseData";
+import AddButton from "@/components/addButton";
 
 export default function Home() {
 
-    const [totalIncome, setTotalIncome] = useState<number[]>([0])
+    const [totalIncome, setTotalIncome] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(false)
     const [invested, setInvested] = useState<number>(0)
-    const [remaining, setRemaining] = useState<number>(0)
     const [expenses, setExpenses] = useState<number>(0)
-    const [haveData, setHaveData] = useState<boolean>(true)
+    const [expenseData, setExpenseData] = useState<ExpenseData[] | []>([])
     const userId = auth.currentUser?.uid
-    const incomeRef = `users/${userId}`
+    const expensesRef = ref(database, "users/expenses")
     
+
+    function getInvestedValue() {
+        
+        const investmentsData = expenseData.filter(expense => {
+            return expense.category === "investments"
+        })
+
+        const investedValue = investmentsData.reduce((a, value) => a = a + value.price, 0)
+        setInvested(investedValue)
+    }
+
+    function getExpensesValue() {
+        const expensesPrices = expenseData.filter(expense => {
+            return expense.price
+        })
+        const expensesValue = expensesPrices.reduce((a, value) => a = a + value.price, 0)
+        setExpenses(expensesValue)
+    }
 
     function handleIncomeChange(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -31,26 +48,50 @@ export default function Home() {
 
     function getIncome(e: MouseEvent<HTMLButtonElement>) {
         setLoading(true)
+        getExpensesValue()
+        getInvestedValue()
         //get expenses on page load and update as new expense is added
         try {
-            setLoading(true)
             get(ref(database, `users/${userId}`)).then((snapshot) => {
                 if(snapshot.exists()) {
                     console.log("snapshot", Object.values(snapshot.val()))
-                    const responseData: number[] = Object.values<number>(snapshot.val())
-                    setTotalIncome(responseData)
-                    setLoading(false)
-                    setHaveData(true)
-                    console.log(responseData)
+                    snapshot.forEach(function (childSnapshot) {
+                        const value = childSnapshot.val();
+                        const responseData = value
+                        setTotalIncome(responseData)
+                        setLoading(false)
+                        console.log("response" ,responseData)
+                    })
                 } else {
-                    setLoading(false)
-                    setHaveData(false)
                 }
             })
         } catch(err) {
             console.log(err);
         }
     }
+
+    useEffect(() => {
+        //get expenses on page load and update as new expense is added
+        try {
+            onValue(expensesRef, (snapshot) => {
+                if(snapshot.exists()) {
+                    const responseData = Object.entries<ExpenseData>(snapshot.val() ?? []).map(([key, value]) => {
+                        return {
+                            id: key,
+                            userId: value.userId,
+                            title: value.title,
+                            price: value.price,
+                            category: value.category
+                        }
+                    })
+                    setExpenseData(responseData)
+                } else {
+                }
+            })
+        } catch(err) {
+            console.log(err);
+        }
+    }, [])
 
     return (
         <Container>
@@ -68,8 +109,9 @@ export default function Home() {
                                 label="Earnings" 
                                 variant="outlined" 
                                 type="text"
-                                onChange={(e) => setTotalIncome([parseInt(e.target.value)])} />
-                        <button type="submit"><AddIcon fontSize="large"/></button>
+                                style={{width: "100px"}}
+                                onChange={(e) => setTotalIncome(parseInt(e.target.value))} />
+                        <AddButton />
                     </form>
                     <Link href="/expenses/expenses" style={{textDecoration: "none"}}>
                         <NavButton title="Add or Check Expenses" />
@@ -90,11 +132,11 @@ export default function Home() {
                         </div>
                         <div className={styles.gridItem}>
                             <p>Expenses</p>
-                            <h2>{expenses}$</h2>
+                            <h2>{expenses - invested}$</h2>
                         </div>
                         <div className={styles.gridItem}>
                             <p>Remaining</p>
-                            <h2>{remaining}$</h2>
+                            <h2>{totalIncome - expenses}$</h2>
                         </div>
                     </section>
                 </section>

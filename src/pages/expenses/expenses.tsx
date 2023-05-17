@@ -1,7 +1,6 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Container, InputLabel, MenuItem, Select, FormControl } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import NavButton from '@/components/navButton'
-import { Container, InputLabel, MenuItem, Select, FormControl } from '@mui/material'
 import styles from './expenses.module.scss'
 import { InputTextField } from '@/components/signMethods/signIn'
 import { FormEvent, useState, useEffect } from 'react'
@@ -10,6 +9,7 @@ import { database, auth } from '../../libs/firebase.js'
 import { push, ref, set, onValue, remove } from 'firebase/database'
 import { ExpenseData } from '@/interfaces/expenseData'
 import { categories } from '@/data/categories';
+import AddButton from '@/components/addButton';
 
 export default function Expenses() {
 
@@ -53,7 +53,6 @@ export default function Expenses() {
                     setExpenseData(responseData)
                     setLoading(false)
                     setHaveData(true)
-                    console.log(expenseData)
                 } else {
                     setLoading(false)
                     setHaveData(false)
@@ -74,48 +73,50 @@ export default function Expenses() {
             <section className={styles.expenses}>
                 <div className={styles.forms}>
                     <NavButton title='Back to home' />
-                    <section className={styles.formBox}>
-                    <h1>Add Expense / Investment</h1>
-                    <form onSubmit={handleCreateExpense} className={styles.formsBox}>
-                        <span>
-                        <InputTextField 
-                        id="title" 
-                        label="Title" 
-                        variant="outlined" 
-                        type="string" 
-                        style={{width: "200px"}}
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}/>
-                        </span>
-                        <span>
-                        <InputTextField 
-                        id="title" 
-                        label="Price" 
-                        variant="outlined" 
-                        type="string" 
-                        style={{width: "100px"}}
-                        value={price}
-                        onChange={(e) => setPrice(parseInt(e.target.value))}/>
-                        </span>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="category"
-                                value={category}
-                                label="Category"
-                                style={{width: "200px", fontFamily: "inherit"}}
-                                onChange={(e) => setCategory(e.target.value)}
-                            >
-                                {/* <MenuItem disabled value=""><em>Category</em></MenuItem> */}
-                                {expenses.map((expense) => (
-                                    <MenuItem style={{fontFamily: "inherit"}} key={expense.id} value={expense.category}>{expense.title}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <button type='submit'>+</button>
+                    <form onSubmit={handleCreateExpense} className={styles.formBox}>
+                        <section className={styles.formHead}>
+                            <h1>Add Expense / Investment</h1>
+                            <AddButton/>
+                        </section>
+                        <section className={styles.formBody}>
+                            <span style={{marginRight: "10px"}}>
+                            <InputTextField 
+                            id="title" 
+                            label="Title" 
+                            variant="outlined" 
+                            type="string" 
+                            style={{width: "180px"}}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}/>
+                            </span>
+                            <span style={{marginRight: "10px"}}>
+                            <InputTextField 
+                            id="title" 
+                            label="Price" 
+                            variant="outlined" 
+                            type="string" 
+                            style={{width: "80px"}}
+                            value={price}
+                            onChange={(e) => setPrice(parseInt(e.target.value))}/>
+                            </span>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="category"
+                                    value={category}
+                                    label="Category"
+                                    style={{width: "200px", fontFamily: "inherit"}}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                >
+                                    <MenuItem disabled value=""><em>Category</em></MenuItem>
+                                    {expenses.map((expense) => (
+                                        <MenuItem style={{fontFamily: "inherit"}} key={expense.id} value={expense.category}>{expense.title}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </section>
                     </form>
-                    </section>
                     <NavButton title='Expenses charts' />
                 </div>
                 <div className={styles.categoriesTable}>
@@ -144,7 +145,7 @@ export default function Expenses() {
                     </Table>
                 </TableContainer>
                 {loading && <h1>loading</h1>}
-                {!haveData && <h1>No data available, add new Expense</h1>}
+                {!haveData && <h1>No data available, please add new Expense</h1>}
                 </div>
             </section>
         </Container>
