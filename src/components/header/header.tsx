@@ -39,8 +39,16 @@ export default function Header () {
                     style={{textDecoration:"none", color: "black"}}>
                         <p>Expenses</p>
                     </Link>
-                    <p>Crypto</p>
-                    <p>Charts</p>
+                    <Link 
+                    href="/crypto/crypto" 
+                    style={{textDecoration:"none", color: "black"}}>
+                        <p>Crypto</p>
+                    </Link>
+                    <Link 
+                    href="/charts/charts" 
+                    style={{textDecoration:"none", color: "black"}}>
+                        <p>Charts</p>
+                    </Link>
                 </nav>
                 <div className={styles.utils}>
                     <ModeSwitcher />

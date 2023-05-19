@@ -77,19 +77,19 @@
             flex-direction: column;
             align-items: center;
             border-radius: 40px;
-            background: #FFD0F5;
+            background: rgb(255, 208, 245);
             width: 220px;
             padding: 10px 20px;
             margin: 10px;
         }
 
         .gridItem:nth-child(2) {
-            background: #960075;
+            background: rgb(150, 0, 117);
             color: white;
         }
 
         .gridItem:nth-child(3) {
-            background: #EC32B8;
+            background: rgb(236, 50, 184);
             color: white;
         }
 

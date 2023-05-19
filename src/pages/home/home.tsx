@@ -8,6 +8,7 @@ import NavButton from "@/components/navButton";
 import { ref, set, onValue, get } from 'firebase/database'
 import { ExpenseData } from "@/interfaces/expenseData";
 import AddButton from "@/components/addButton";
+import DoughnoutChart from "@/components/doughnoutChart";
 
 export default function Home() {
 
@@ -28,6 +29,7 @@ export default function Home() {
 
         const investedValue = investmentsData.reduce((a, value) => a = a + value.price, 0)
         setInvested(investedValue)
+        return investedValue
     }
 
     function getExpensesValue() {
@@ -36,6 +38,7 @@ export default function Home() {
         })
         const expensesValue = expensesPrices.reduce((a, value) => a = a + value.price, 0)
         setExpenses(expensesValue)
+        return expensesValue
     }
 
     function handleIncomeChange(e: FormEvent<HTMLFormElement>) {
@@ -50,6 +53,26 @@ export default function Home() {
         setLoading(true)
         getExpensesValue()
         getInvestedValue()
+        console.log(invested)
+        setIncomeData({
+            labels: [
+                "Total Income", "Expenses", "Invested"
+            ],
+            datasets: [{
+                label: "Value",
+                data: [totalIncome, invested, expenses],
+                backgroundColor: [
+                  'rgb(255, 208, 245)',
+                  'rgb(236, 50, 184)',
+                  'rgb(150, 0, 117)'
+                ]
+            }],
+            options: {
+                tooltips: {
+                    intersect: false
+                    }
+                }
+        })
         //get expenses on page load and update as new expense is added
         try {
             get(ref(database, `users/${userId}`)).then((snapshot) => {
@@ -92,6 +115,26 @@ export default function Home() {
             console.log(err);
         }
     }, [])
+
+    const [incomeData, setIncomeData] = useState({
+        labels: [
+            "Total Income", "Expenses", "Invested"
+        ],
+        datasets: [{
+            label: "Value",
+            data: [1, 0, 0],
+            backgroundColor: [
+              'rgb(255, 208, 245)',
+              'rgb(236, 50, 184)',
+              'rgb(150, 0, 117)'
+            ]
+        }],
+        options: {
+            tooltips: {
+                intersect: false
+                }
+            }
+    })
 
     return (
         <Container>
@@ -139,6 +182,9 @@ export default function Home() {
                             <h2>{totalIncome - expenses}$</h2>
                         </div>
                     </section>
+                    <div>
+                        <DoughnoutChart chartData={incomeData} />
+                    </div>
                 </section>
             </div>
         </Container>
