@@ -37,7 +37,8 @@ export default function Home() {
             return expense.price
         })
         const expensesValue = expensesPrices.reduce((a, value) => a = a + value.price, 0)
-        setExpenses(expensesValue)
+        const expenseFinal = expensesValue - getInvestedValue()
+        setExpenses(expenseFinal)
         return expensesValue
     }
 
@@ -49,30 +50,7 @@ export default function Home() {
         })
     }
 
-    function getIncome(e: MouseEvent<HTMLButtonElement>) {
-        setLoading(true)
-        getExpensesValue()
-        getInvestedValue()
-        console.log(invested)
-        setIncomeData({
-            labels: [
-                "Total Income", "Expenses", "Invested"
-            ],
-            datasets: [{
-                label: "Value",
-                data: [totalIncome, invested, expenses],
-                backgroundColor: [
-                  'rgb(255, 208, 245)',
-                  'rgb(236, 50, 184)',
-                  'rgb(150, 0, 117)'
-                ]
-            }],
-            options: {
-                tooltips: {
-                    intersect: false
-                    }
-                }
-        })
+    function getIncome() {
         //get expenses on page load and update as new expense is added
         try {
             get(ref(database, `users/${userId}`)).then((snapshot) => {
@@ -82,7 +60,6 @@ export default function Home() {
                         const value = childSnapshot.val();
                         const responseData = value
                         setTotalIncome(responseData)
-                        setLoading(false)
                         console.log("response" ,responseData)
                     })
                 } else {
@@ -93,8 +70,14 @@ export default function Home() {
         }
     }
 
+    function showData() {
+        getIncome()
+        getExpensesValue()
+        getInvestedValue()
+    }
+
     useEffect(() => {
-        //get expenses on page load and update as new expense is added
+        //get expenses
         try {
             onValue(expensesRef, (snapshot) => {
                 if(snapshot.exists()) {
@@ -122,19 +105,31 @@ export default function Home() {
         ],
         datasets: [{
             label: "Value",
-            data: [1, 0, 0],
+            data: [0, 0, 0],
             backgroundColor: [
               'rgb(255, 208, 245)',
               'rgb(236, 50, 184)',
               'rgb(150, 0, 117)'
             ]
-        }],
-        options: {
-            tooltips: {
-                intersect: false
-                }
-            }
+        }]
     })
+
+    useEffect(() => {
+        setIncomeData({
+            labels: [
+                "Total Income", "Expenses", "Invested"
+            ],
+            datasets: [{
+                label: "Value",
+                data: [totalIncome, expenses, invested],
+                backgroundColor: [
+                'rgb(255, 208, 245)',
+                'rgb(236, 50, 184)',
+                'rgb(150, 0, 117)'
+                ]
+            }]
+        })
+    }, [totalIncome])
 
     return (
         <Container>
@@ -143,7 +138,7 @@ export default function Home() {
                     <section className={styles.introBox}>
                         <h2>Welcome</h2>
                         <p>This is the home page, find a brief overview of your spendings and links to other pages.</p>
-                        <button onClick={getIncome}>get</button>
+                        <button onClick={showData}>get</button>
                     </section>
                     <form onSubmit={handleIncomeChange} className={styles.formBox}>
                         <p>First add your total income:</p>
@@ -175,7 +170,7 @@ export default function Home() {
                         </div>
                         <div className={styles.gridItem}>
                             <p>Expenses</p>
-                            <h2>{expenses - invested}$</h2>
+                            <h2>{expenses}$</h2>
                         </div>
                         <div className={styles.gridItem}>
                             <p>Remaining</p>
