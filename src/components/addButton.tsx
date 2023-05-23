@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 const ButtonAdd = styled(Button)<ButtonProps>(() => ({
     color: "white",
-    padding: "12px 0",
+    padding: "13px 0",
     width: "fit-content",
     height: "fit-content",
     backgroundColor: "#a4008e",

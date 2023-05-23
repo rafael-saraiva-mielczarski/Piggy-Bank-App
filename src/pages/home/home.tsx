@@ -48,6 +48,8 @@ export default function Home() {
         set(ref(database, `users/${userId}`), {
            income: totalIncome
         })
+
+        setTotalIncome(0)
     }
 
     function getIncome() {
@@ -129,7 +131,7 @@ export default function Home() {
                 ]
             }]
         })
-    }, [totalIncome])
+    }, [invested])
 
     return (
         <Container>
@@ -146,7 +148,8 @@ export default function Home() {
                                 id="email" 
                                 label="Earnings" 
                                 variant="outlined" 
-                                type="text"
+                                type="string"
+                                value={totalIncome}
                                 style={{width: "100px"}}
                                 onChange={(e) => setTotalIncome(parseInt(e.target.value))} />
                         <AddButton />
@@ -154,7 +157,7 @@ export default function Home() {
                     <Link href="/expenses/expenses" style={{textDecoration: "none"}}>
                         <NavButton title="Add or Check Expenses" />
                     </Link>
-                    <Link href="/home" style={{textDecoration: "none"}}>
+                    <Link href="/crypto/crypto" style={{textDecoration: "none"}}>
                         <NavButton title="Crypto Investments" />
                     </Link>
                 </section>

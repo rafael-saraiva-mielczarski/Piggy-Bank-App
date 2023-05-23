@@ -3,6 +3,8 @@ import { database } from '../../libs/firebase.js'
 import { ref, onValue } from 'firebase/database'
 import { ExpenseData } from '@/interfaces/expenseData'
 import { useEffect, useState } from "react";
+import { Container } from "@mui/material";
+import styles from './charts.module.scss'
 
 export default function Charts() {
 
@@ -69,7 +71,7 @@ export default function Charts() {
     const data = {
         labels: ["Food", "Enjoyment", "Education", "Bills", "Health", "Others", "Transportation", "Investments",],
         datasets: [{
-          label: 'Expenses Chart',
+          label: 'Expense Value',
           data: [foodValue, enjoyment, education, bills, health, others, transportation, investments],
           backgroundColor: [
           'rgb(247, 151, 255)',
@@ -86,9 +88,9 @@ export default function Charts() {
       };
 
     return(
-        <div>
-            <h1>Expenses charts</h1>
+        <Container className={styles.container}>
+            <h1 className={styles.title}>Expenses charts</h1>
             <LineChart chartData={data} />
-        </div>
+        </Container>
     )
 }

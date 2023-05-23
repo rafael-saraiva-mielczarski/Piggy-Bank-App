@@ -10,6 +10,7 @@ import { push, ref, set, onValue, remove } from 'firebase/database'
 import { ExpenseData } from '@/interfaces/expenseData'
 import { categories } from '@/data/categories';
 import AddButton from '@/components/addButton';
+import Link from 'next/link';
 
 export default function Expenses() {
 
@@ -32,6 +33,10 @@ export default function Expenses() {
             price: price,
             category: category,
         })
+
+        setTitle("")
+        setPrice(0)
+        setCategory("")
     }
 
     useEffect(() => {
@@ -72,7 +77,7 @@ export default function Expenses() {
         <Container>
             <section className={styles.expenses}>
                 <div className={styles.forms}>
-                    <NavButton title='Back to home' />
+                    <Link href="/home/home"><NavButton title='Back to home' /></Link>
                     <form onSubmit={handleCreateExpense} className={styles.formBox}>
                         <section className={styles.formHead}>
                             <h1>Add Expense / Investment</h1>
@@ -91,7 +96,7 @@ export default function Expenses() {
                             </span>
                             <span style={{marginRight: "10px"}}>
                             <InputTextField 
-                            id="title" 
+                            id="price" 
                             label="Price" 
                             variant="outlined" 
                             type="string" 
@@ -100,9 +105,9 @@ export default function Expenses() {
                             onChange={(e) => setPrice(parseInt(e.target.value))}/>
                             </span>
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                                <InputLabel id="category">Category</InputLabel>
                                 <Select
-                                    labelId="demo-simple-select-label"
+                                    labelId="category"
                                     id="category"
                                     value={category}
                                     label="Category"
@@ -117,7 +122,7 @@ export default function Expenses() {
                             </FormControl>
                         </section>
                     </form>
-                    <NavButton title='Expenses charts' />
+                    <Link href="/charts/charts"><NavButton title='Expenses charts' /></Link>
                 </div>
                 <div className={styles.categoriesTable}>
                 <TableContainer component={Paper}>
@@ -138,7 +143,7 @@ export default function Expenses() {
                                 <TableCell align="center" className={styles.categorieData}><span style={{background: categories[expense.category].color, padding: "15px", borderRadius: "15px", fontFamily: "inherit"}} >
                                     {categories[expense.category].title}
                                     </span></TableCell>
-                                <TableCell align="center" className={styles.categorieData}><DeleteIcon color="error" onClick={() => handleDeleteExpense(expense.id)} /></TableCell>
+                                <TableCell align="center" className={styles.categorieData}><DeleteIcon color="error" style={{cursor: "pointer"}} onClick={() => handleDeleteExpense(expense.id)} /></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
