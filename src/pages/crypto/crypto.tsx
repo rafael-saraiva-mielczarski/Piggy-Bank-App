@@ -1,4 +1,5 @@
-import Image from "next/image"
+import { Container } from "@mui/material"
+import styles from './crypto.module.scss'
 
 type Coin = {
     coinsData: any
@@ -17,13 +18,22 @@ export async function getStaticProps() {
 export default function Crypto( {coinsData}: Coin ) {
 
     return(
-        <div>Crypto
-            {coinsData.map((coin: any, index: number) => 
-            <div key={index}>
-                <h1>{coin.symbol}</h1>
-                <img src={coin.image} alt="coin logo" />
+        <Container>Crypto
+            <div className={styles.coinsList}>
+                {coinsData.map((coin: any, index: number) => 
+                <div key={index} className={styles.coin}>
+                    <img src={coin.image} alt="coin logo" />
+                    <div>
+                        <h1>{coin.name}</h1>
+                        <p>{coin.symbol.toUpperCase()}</p>
+                        <p>{coin.current_price} USD</p>
+                        <p style={{color: coin.price_change_24h < 0 ? 'red':'green'}}>
+                            {coin.price_change_24h.toString().length < 9 ? coin.price_change_24h : coin.price_change_24h.toFixed(8)}
+                        </p>
+                    </div>
+                </div>
+                )}
             </div>
-            )}
-        </div>
+        </Container>
     )
 }

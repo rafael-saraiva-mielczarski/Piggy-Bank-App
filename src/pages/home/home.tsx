@@ -131,7 +131,7 @@ export default function Home() {
                 ]
             }]
         })
-    }, [invested])
+    }, [totalIncome])
 
     return (
         <Container>
