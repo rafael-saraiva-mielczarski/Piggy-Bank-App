@@ -2,20 +2,22 @@ import Link from "next/link";
 import { Container } from "@mui/material";
 import styles from './home.module.scss';
 import { InputTextField } from "@/components/signMethods/signIn";
-import { FormEvent, useEffect, useState, MouseEvent } from "react";
+import { FormEvent, use, useEffect, useState } from "react";
 import { database, auth } from '../../libs/firebase.js'
 import NavButton from "@/components/navButton";
 import { ref, set, onValue, get } from 'firebase/database'
 import { ExpenseData } from "@/interfaces/expenseData";
 import AddButton from "@/components/addButton";
 import DoughnoutChart from "@/components/doughnoutChart";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function Home() {
 
     const [totalIncome, setTotalIncome] = useState<number>(0)
-    const [loading, setLoading] = useState<boolean>(false)
     const [invested, setInvested] = useState<number>(0)
     const [expenses, setExpenses] = useState<number>(0)
+    const [hide, setHide] = useState<boolean>(true)
     const [expenseData, setExpenseData] = useState<ExpenseData[] | []>([])
     const userId = auth.currentUser?.uid
     const expensesRef = ref(database, "users/expenses")
@@ -72,11 +74,11 @@ export default function Home() {
         }
     }
 
-    function showData() {
+    useEffect(() => {
         getIncome()
         getExpensesValue()
         getInvestedValue()
-    }
+    }) 
 
     useEffect(() => {
         //get expenses
@@ -116,7 +118,7 @@ export default function Home() {
         }]
     })
 
-    useEffect(() => {
+    function setChart() {
         setIncomeData({
             labels: [
                 "Total Income", "Expenses", "Invested"
@@ -131,7 +133,7 @@ export default function Home() {
                 ]
             }]
         })
-    }, [totalIncome])
+    }
 
     return (
         <Container>
@@ -140,7 +142,7 @@ export default function Home() {
                     <section className={styles.introBox}>
                         <h2>Welcome</h2>
                         <p>This is the home page, find a brief overview of your spendings and links to other pages.</p>
-                        <button onClick={showData}>get</button>
+                        {/* <button onClick={showData}>get</button> */}
                     </section>
                     <form onSubmit={handleIncomeChange} className={styles.formBox}>
                         <p>First add your total income:</p>
@@ -162,27 +164,60 @@ export default function Home() {
                     </Link>
                 </section>
                 <section className={styles.homeRight}>
-                    <section className={styles.userValues}>
-                        <div className={styles.gridItem}>
-                            <p>Total Income</p>
-                            <h2>{totalIncome}$</h2>
-                        </div>
-                        <div className={styles.gridItem}>
-                            <p>Invested</p>
-                            <h2>{invested}$</h2>
-                        </div>
-                        <div className={styles.gridItem}>
-                            <p>Expenses</p>
-                            <h2>{expenses}$</h2>
-                        </div>
-                        <div className={styles.gridItem}>
-                            <p>Remaining</p>
-                            <h2>{totalIncome - expenses}$</h2>
-                        </div>
-                    </section>
+                    {hide === true ? 
                     <div>
-                        <DoughnoutChart chartData={incomeData} />
+                        <section className={styles.showData}>
+                            <p>Show your income</p>
+                            <VisibilityIcon onClick={() => (setHide(!hide), setChart())} />
+                        </section>
+                        <section className={styles.userValues}>
+                            <div className={styles.gridItem}>
+                                <p>Total Income</p>
+                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <p>Invested</p>
+                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <p>Expenses</p>
+                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <p>Remaining</p>
+                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                            </div>
+                        </section>
                     </div>
+                    : 
+                    <div>
+                        <section className={styles.showData}>
+                            <p>Don't show your income</p>
+                            <VisibilityOffIcon onClick={() => (setHide(!hide), setChart() )} />
+                        </section>
+                        <section className={styles.userValues}>
+                            <div className={styles.gridItem}>
+                                <p>Total Income</p>
+                                <h2>{totalIncome}$</h2>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <p>Invested</p>
+                                <h2>{invested}$</h2>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <p>Expenses</p>
+                                <h2>{expenses}$</h2>
+                            </div>
+                            <div className={styles.gridItem}>
+                                <p>Remaining</p>
+                                <h2>{totalIncome - expenses}$</h2>
+                            </div>
+                        </section>
+                        <div className={styles.chart}>
+                            <DoughnoutChart chartData={incomeData} />
+                        </div>
+                    </div>
+                    }
                 </section>
             </div>
         </Container>

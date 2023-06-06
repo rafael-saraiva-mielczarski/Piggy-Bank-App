@@ -3,7 +3,6 @@ import Image from "next/image"
 import pig from "../../assets/pig.png"
 import styles from "./header.module.scss"
 import LogoutIcon from '@mui/icons-material/Logout';
-import ModeSwitcher from "../modeSwitcher";
 import { signOut } from "firebase/auth";
 import { auth } from "@/libs/firebase";
 import { useRouter } from "next/router";
@@ -51,7 +50,6 @@ export default function Header () {
                     </Link>
                 </nav>
                 <div className={styles.utils}>
-                    <ModeSwitcher />
                     <span onClick={handleSignOut} style={{cursor: "pointer"}}><LogoutIcon/></span>
                 </div>
             </div>

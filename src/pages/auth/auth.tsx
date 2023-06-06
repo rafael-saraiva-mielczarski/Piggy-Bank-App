@@ -1,4 +1,3 @@
-import ModeSwitcher from "@/components/modeSwitcher";
 import { Container } from "@mui/system";
 import Image from "next/image";
 import styles from "./auth.module.scss"
@@ -24,7 +23,6 @@ export default function Auth() {
                         <h1>Welcome to your Piggy Bank App!</h1>
                         <p>An online app where you can keep account of your money, expenses and take a look at the crypto and stock market.</p>
                     </section>
-                    <span className={styles.switch}><ModeSwitcher /></span>
                 </section>
                 <section className={styles.body}>
                     <div className={styles.signInBox}>
