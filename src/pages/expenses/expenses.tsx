@@ -73,6 +73,7 @@ export default function Expenses() {
     function handleDeleteExpense(id: string) {
         const expensesRef = ref(database, `users/expenses/${id}`)
         remove(expensesRef)
+        expenseData.pop()
     }
 
     return (
