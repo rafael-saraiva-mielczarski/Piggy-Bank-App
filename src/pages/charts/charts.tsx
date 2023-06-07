@@ -1,5 +1,5 @@
 import LineChart from "@/components/barChart";
-import { database } from '../../libs/firebase.js'
+import { database, auth } from '../../libs/firebase.js'
 import { ref, onValue } from 'firebase/database'
 import { ExpenseData } from '@/interfaces/expenseData'
 import { useEffect, useState } from "react";
@@ -8,7 +8,8 @@ import styles from './charts.module.scss'
 
 export default function Charts() {
 
-    const expensesRef = ref(database, "users/expenses")
+    const userId = auth.currentUser?.uid
+    const expensesRef = ref(database, `users/${userId}/expenses`)
     const [expenseData, setExpenseData] = useState<ExpenseData[] | []>([])
 
     useEffect(() => {
