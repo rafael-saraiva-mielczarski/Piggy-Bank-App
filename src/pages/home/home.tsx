@@ -22,7 +22,7 @@ export default function Home() {
     const [hide, setHide] = useState<boolean>(true)
     const [expenseData, setExpenseData] = useState<ExpenseData[] | []>([])
     const userId = auth.currentUser?.uid
-    const expensesRef = ref(database, "users/expenses")
+    const expensesRef = ref(database, `users/${userId}/expenses`)
     
 
     function getInvestedValue() {

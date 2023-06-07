@@ -19,11 +19,11 @@ export default function Expenses() {
     const [title, setTitle] = useState<string>("")
     const [price, setPrice] = useState<number>(0)
     const [category, setCategory] = useState<string>("")
-    const expensesRef = ref(database, "users/expenses")
     const [expenseData, setExpenseData] = useState<ExpenseData[] | []>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [haveData, setHaveData] = useState<boolean>(true)
     const userId = auth.currentUser?.uid
+    const expensesRef = ref(database, `users/${userId}/expenses`)
 
     function handleCreateExpense(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
