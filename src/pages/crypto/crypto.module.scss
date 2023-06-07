@@ -45,4 +45,15 @@
     padding: 30px 0;
     display: flex;
     justify-content: center;
+
+    li {
+       
+        button {
+            font-family: inherit ;
+            
+            .css-1mtig89-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+                background-color: #FC8DFE;
+            }
+        }
+    }
 }

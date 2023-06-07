@@ -80,7 +80,7 @@ export default function Home() {
         getIncome()
         getExpensesValue()
         getInvestedValue()
-    }) 
+    }, [userId]) 
 
     useEffect(() => {
         //get expenses
@@ -151,7 +151,8 @@ export default function Home() {
                                 id="email" 
                                 label="Earnings" 
                                 variant="outlined" 
-                                type="string"
+                                type="number"
+                                placeholder="0"
                                 value={totalIncome}
                                 style={{width: "100px"}}
                                 onChange={(e) => setTotalIncome(parseInt(e.target.value))} />
@@ -190,7 +191,7 @@ export default function Home() {
                             </div>
                         </section>
                         <div className={styles.chart}>
-                            <Image src={pig} alt="pig" className={styles.pigImg} />
+                            <Image src={pig} alt="pig" priority className={styles.pigImg} />
                         </div>
                     </div>
                     : 
@@ -214,7 +215,7 @@ export default function Home() {
                             </div>
                             <div className={styles.gridItem}>
                                 <p>Remaining</p>
-                                <h2>{totalIncome - expenses}$</h2>
+                                <h2  style={{color: totalIncome - expenses < 0 ? 'red':'green'}}>{totalIncome - expenses}$</h2>
                             </div>
                         </section>
                         <div className={styles.chart}>

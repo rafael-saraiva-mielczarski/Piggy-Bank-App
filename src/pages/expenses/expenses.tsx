@@ -101,7 +101,8 @@ export default function Expenses() {
                             id="price" 
                             label="Price" 
                             variant="outlined" 
-                            type="string" 
+                            type="number" 
+                            placeholder='00'
                             style={{width: "80px"}}
                             value={price}
                             onChange={(e) => setPrice(parseInt(e.target.value))}/>
