@@ -109,8 +109,13 @@
         }
 
         .chart {
-            width: fit-content;
+            width: 270px;
             margin: 0 auto;
+
+            .pigImg {
+                width: 270px;
+                height: fit-content;
+            }
         }
     }
 }

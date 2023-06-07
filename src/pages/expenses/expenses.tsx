@@ -11,6 +11,8 @@ import { ExpenseData } from '@/interfaces/expenseData'
 import { categories } from '@/data/categories';
 import AddButton from '@/components/addButton';
 import Link from 'next/link';
+import pig from '../../assets/pig.png'
+import Image from 'next/image'
 
 export default function Expenses() {
 
@@ -149,8 +151,12 @@ export default function Expenses() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {loading && <h1>loading</h1>}
-                {!haveData && <h1>No data available, please add new Expense</h1>}
+                {loading && 
+                    <div className={styles.loading}>
+                        <h1>Loading...</h1>
+                        <Image src={pig} alt="pig" className={styles.pigImg}/>
+                    </div>}
+                {!haveData && <h1 className={styles.noData}>No data available, please add new Expense</h1>}
                 </div>
             </section>
         </Container>

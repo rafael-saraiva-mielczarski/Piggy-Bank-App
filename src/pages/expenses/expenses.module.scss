@@ -53,5 +53,34 @@
         .categorieData:nth-child(3) {
             font-weight: 600;
         }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .pigImg {
+            width: 300px;
+            height: 100%;
+            margin-top: 70px;
+            animation: rotation 2s infinite linear;
+        }
+
+        .noData {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        @keyframes rotation {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(359deg);
+            }
+          }
     }
 }

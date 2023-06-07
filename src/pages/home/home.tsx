@@ -11,6 +11,8 @@ import AddButton from "@/components/addButton";
 import DoughnoutChart from "@/components/doughnoutChart";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Image from "next/image";
+import pig from '../../assets/pig.png'
 
 export default function Home() {
 
@@ -142,7 +144,6 @@ export default function Home() {
                     <section className={styles.introBox}>
                         <h2>Welcome</h2>
                         <p>This is the home page, find a brief overview of your spendings and links to other pages.</p>
-                        {/* <button onClick={showData}>get</button> */}
                     </section>
                     <form onSubmit={handleIncomeChange} className={styles.formBox}>
                         <p>First add your total income:</p>
@@ -173,26 +174,29 @@ export default function Home() {
                         <section className={styles.userValues}>
                             <div className={styles.gridItem}>
                                 <p>Total Income</p>
-                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                                <VisibilityOffIcon style={{marginTop: "6px"}}/>
                             </div>
                             <div className={styles.gridItem}>
                                 <p>Invested</p>
-                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                                <VisibilityOffIcon style={{marginTop: "6px"}}/>
                             </div>
                             <div className={styles.gridItem}>
                                 <p>Expenses</p>
-                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                                <VisibilityOffIcon style={{marginTop: "6px"}}/>
                             </div>
                             <div className={styles.gridItem}>
                                 <p>Remaining</p>
-                                <VisibilityOffIcon style={{marginTop: "5px"}}/>
+                                <VisibilityOffIcon style={{marginTop: "6px"}}/>
                             </div>
                         </section>
+                        <div className={styles.chart}>
+                            <Image src={pig} alt="pig" className={styles.pigImg} />
+                        </div>
                     </div>
                     : 
                     <div>
                         <section className={styles.showData}>
-                            <p>Don't show your income</p>
+                            <p>Hide your income</p>
                             <VisibilityOffIcon onClick={() => (setHide(!hide), setChart() )} />
                         </section>
                         <section className={styles.userValues}>
